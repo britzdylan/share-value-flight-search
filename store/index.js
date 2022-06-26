@@ -1,7 +1,8 @@
 const qs = require('qs')
 
 export const state = () => ({
-  counter: 0,
+  user_country: null,
+  user_currency: null
 });
 
 export const getter = {
@@ -14,9 +15,31 @@ export const mutations = {
   increment(state) {
     state.counter++;
   },
+  setUserLocation(state, payload) {
+    state.user_country = payload
+  },
+  setUserCurrency(state, payload) {
+    state.user_currency = Object.keys(payload)[0]
+  }
 };
 
 export const actions = {
+  async getUserLocation(ctx) {
+    fetch('http://ip-api.com/json/')
+      .then(response => response.json())
+      .then(data => {
+        ctx.dispatch('getUserCurrency', data.countryCode)
+        ctx.commit('setUserLocation', data.countryCode)
+      });
+  },
+  async getUserCurrency(ctx, payload) {
+    fetch(`https://restcountries.com/v3.1/alpha/${payload}`)
+      .then(response => response.json())
+      .then(data => {
+        ctx.commit('setUserCurrency', data[0].currencies)
+        return true
+      });
+  },
   async getToken(ctx) {
     delete this.$axios.defaults.headers.common['Authorization']
     try {
