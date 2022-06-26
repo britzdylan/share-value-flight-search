@@ -18,12 +18,16 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: true },
+      { href: "https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Work+Sans:wght@300;400;500;600&display=swap", rel: "stylesheet" }
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '@/assets/css/main.css',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -37,6 +41,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
+    '@nuxt/postcss8'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -53,5 +58,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    postcss: {
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    },
   }
 }
