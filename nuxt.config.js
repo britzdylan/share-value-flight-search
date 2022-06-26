@@ -1,4 +1,8 @@
 export default {
+  env: {
+    CLIENTID: process.env.CLIENTID,
+    CLIENT_SECRET: process.env.CLIENT_SECRET,
+  },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
@@ -32,6 +36,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/axios.js' },
+    { src: "~/plugins/vee-validate.js" }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -39,9 +45,8 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
-    '@nuxt/postcss8'
+    '@nuxt/postcss8',
+    '@nuxtjs/axios'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -53,11 +58,17 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'https://test.api.amadeus.com',
+    headers: {
+      common: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: ["vee-validate/dist/rules"],
     postcss: {
       plugins: {
         tailwindcss: {},

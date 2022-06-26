@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="navbar bg-base-100">
+  <div class="navbar bg-base-100 mb-12">
     <div class="navbar-start">
       <a class="btn btn-ghost normal-case text-xl"
         ><svg
