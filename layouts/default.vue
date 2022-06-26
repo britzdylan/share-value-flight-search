@@ -6,7 +6,7 @@
 </template>
 <script>
 import Vue from "vue";
-import PageHeader from "~/components/shared/header.vue";
+import PageHeader from "~/components/shared/header";
 export default Vue.extend({
   name: "default",
   components: { PageHeader: PageHeader },

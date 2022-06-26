@@ -35,7 +35,7 @@
                 :airPorts="airPorts"
                 :ctx="ctx"
                 :searchingInput="searchingInput"
-                @itemSelected="setBookingInformation"
+                @itemSelected="setLocationInfo"
               />
             </div>
           </ValidationProvider>
@@ -67,7 +67,7 @@
                 :searchResults="searchResults"
                 :airPorts="airPorts"
                 :ctx="ctx"
-                @itemSelected="setBookingInformation"
+                @itemSelected="setLocationInfo"
               />
             </div>
           </ValidationProvider>
@@ -119,11 +119,13 @@
         </div>
       </form>
     </ValidationObserver>
+    <BookingSettings @UpdateBookingSettings="setFlightInfo" />
   </section>
 </template>
 <script>
 import SearchResultsDropdown from "/components/shared/searchResultsDropdown";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
+import BookingSettings from "~/components/modals/bookingSettings";
 
 export default {
   name: "returnBookingForm",
@@ -131,6 +133,7 @@ export default {
     SearchResultsDropdown,
     ValidationObserver: ValidationObserver,
     ValidationProvider: ValidationProvider,
+    BookingSettings: BookingSettings,
   },
   data() {
     return {
@@ -142,11 +145,20 @@ export default {
       destinationLocationCode: "",
       departureDate: "",
       returnDate: "",
+      adults: 1,
+      children: 1,
+      infants: 0,
+      travelClass: "ECONOMY",
       timeoutQuery: null,
       searchResults: [],
       airPorts: {},
       ctx: "",
     };
+  },
+  computed: {
+    currencyCode() {
+      return this.$store.getters.getUserCurrencyCode;
+    },
   },
   methods: {
     setCtx(e) {
@@ -176,8 +188,12 @@ export default {
         destinationLocationCode: this.destinationLocationCode,
         departureDate: this.departureDate,
         returnDate: this.returnDate,
-        adults: 2,
-        max: 5,
+        adults: this.adults,
+        children: this.children,
+        infants: this.infants,
+        travelClass: this.travelClass,
+        currencyCode: this.currencyCode,
+        max: 10,
       };
       try {
         let res = await this.$store.dispatch("searchFlightOffers", payload);
@@ -187,7 +203,7 @@ export default {
       }
     },
 
-    async setBookingInformation(e) {
+    async setLocationInfo(e) {
       console.log(e);
       this[e[0]] = e[1].iataCode;
       this.searchResults = [];
@@ -204,6 +220,15 @@ export default {
           break;
       }
       this.ctx = "";
+    },
+    async setFlightInfo(e) {
+      this.adults = e.adults;
+      this.children = e.children;
+      this.infants = e.infants;
+      this.travelClass = e.travelClass;
+    },
+    log(e) {
+      console.log(e);
     },
   },
 };

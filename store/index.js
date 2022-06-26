@@ -5,9 +5,9 @@ export const state = () => ({
   user_currency: null
 });
 
-export const getter = {
-  getCounter(state) {
-    return state.counter;
+export const getters = {
+  getUserCurrencyCode(state) {
+    return state.user_currency;
   },
 };
 
@@ -55,10 +55,9 @@ export const actions = {
 
   },
   async searchFlightOffers(ctx, payload) {
-    console.log(payload);
-    const { originLocationCode, destinationLocationCode, departureDate, returnDate, adults, max } = payload
-    // make request
-    return await this.$axios.get(`/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&max=${max}`)
+    return await this.$axios.get(`/v2/shopping/flight-offers`, {
+      params: { ...payload }
+    })
   },
 
   async findAirports(ctx, payload) {

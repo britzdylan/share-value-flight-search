@@ -4,18 +4,23 @@
       <span class="text-primary">Hello there,</span> <br />
       Book cheap flights with your one-stop travel shop!
     </h1>
-    <div class="tabs">
-      <a
-        @click="toggleFlightType(true)"
-        class="tab tab-bordered"
-        :class="returnFlight ? 'tab-active' : null"
-        >Return Flight</a
-      >
-      <a
-        @click="toggleFlightType(false)"
-        class="tab tab-bordered"
-        :class="!returnFlight ? 'tab-active' : null"
-        >One Way</a
+    <div class="flex flex-row items-center justify-between">
+      <div class="tabs">
+        <a
+          @click="toggleFlightType(true)"
+          class="tab tab-bordered"
+          :class="returnFlight ? 'tab-active' : null"
+          >Return Flight</a
+        >
+        <a
+          @click="toggleFlightType(false)"
+          class="tab tab-bordered"
+          :class="!returnFlight ? 'tab-active' : null"
+          >One Way</a
+        >
+      </div>
+      <label for="my-modal" class="btn btn-sm btn-accent modal-button"
+        >Seats & Passengers</label
       >
     </div>
     <ReturnBookingForm />
