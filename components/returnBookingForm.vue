@@ -119,18 +119,27 @@
         </div>
       </form>
     </ValidationObserver>
+    <div class="flex flex-row items-center justify-end py-2">
+      <template v-for="(item, key) in flightSettings">
+        <div :key="'badge_' + item" class="badge badge-accent badge-md ml-2">
+          {{ key.toUpperCase() + " : " + item }}
+        </div>
+      </template>
+    </div>
     <BookingSettings @UpdateBookingSettings="setFlightInfo" />
+    <BookingForm :adults="adults" :children="children" :infants="infants" />
   </section>
 </template>
 <script>
-import SearchResultsDropdown from "/components/shared/searchResultsDropdown";
+import searchResultsDropdown from "/components/shared/searchResultsDropdown";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import BookingSettings from "~/components/modals/bookingSettings";
-
+import BookingForm from "~/components/modals/bookingForm";
 export default {
   name: "returnBookingForm",
   components: {
-    SearchResultsDropdown,
+    BookingForm: BookingForm,
+    SearchResultsDropdown: searchResultsDropdown,
     ValidationObserver: ValidationObserver,
     ValidationProvider: ValidationProvider,
     BookingSettings: BookingSettings,
@@ -146,7 +155,7 @@ export default {
       departureDate: "",
       returnDate: "",
       adults: 1,
-      children: 1,
+      children: 0,
       infants: 0,
       travelClass: "ECONOMY",
       timeoutQuery: null,
@@ -158,6 +167,14 @@ export default {
   computed: {
     currencyCode() {
       return this.$store.getters.getUserCurrencyCode;
+    },
+    flightSettings() {
+      return {
+        adults: this.adults,
+        children: this.children,
+        infants: this.infants,
+        travelClass: this.travelClass,
+      };
     },
   },
   methods: {
@@ -196,7 +213,7 @@ export default {
         max: 10,
       };
       try {
-        let res = await this.$store.dispatch("searchFlightOffers", payload);
+        await this.$store.dispatch("searchFlightOffers", payload);
         this.loading = false;
       } catch (error) {
         alert("Oops something went wrong");

@@ -53,6 +53,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/dayjs'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -64,6 +65,13 @@ export default {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     }
+  },
+
+  dayjs: {
+    plugins: [
+      'utc', // import 'dayjs/plugin/utc'
+      'timezone' // import 'dayjs/plugin/timezone'
+    ] // Your Day.js plugin
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

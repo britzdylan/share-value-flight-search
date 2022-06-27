@@ -24,18 +24,37 @@
       >
     </div>
     <ReturnBookingForm />
+    <div class="grid grid-cols-1 gap-10">
+      <template v-for="(item, index) in flightOffers">
+        <FlightCard
+          :flightOffersDictionaries="flightOffersDictionaries"
+          :item="item"
+          :key="index + '_flightOffer'"
+        />
+      </template>
+    </div>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
-export default Vue.extend({
+export default {
   name: "IndexPage",
   components: {},
   data() {
     return {
       returnFlight: true,
     };
+  },
+  computed: {
+    flightOffers() {
+      return this.$store.getters.getFlightOffers;
+    },
+    flightOffersMeta() {
+      return this.$store.getters.getFlightOffersMeta;
+    },
+    flightOffersDictionaries() {
+      return this.$store.getters.getFlightOffersDictionaries;
+    },
   },
   methods: {
     log(value) {
@@ -45,5 +64,5 @@ export default Vue.extend({
       this.returnFlight = value;
     },
   },
-});
+};
 </script>

@@ -88,8 +88,7 @@
   </div>
 </template>
 <script>
-import Vue from "vue";
-export default Vue.extend({
+export default {
   name: "BookingSettings",
   data() {
     return {
@@ -109,6 +108,6 @@ export default Vue.extend({
       });
     },
   },
-});
+};
 </script>
 <style lang=""></style>

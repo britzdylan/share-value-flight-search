@@ -2,13 +2,25 @@ const qs = require('qs')
 
 export const state = () => ({
   user_country: null,
-  user_currency: null
+  user_currency: null,
+  flightOffers: {
+  },
+  bookingInfo: {}
 });
 
 export const getters = {
   getUserCurrencyCode(state) {
     return state.user_currency;
   },
+  getFlightOffers(state) {
+    return state.flightOffers.data
+  },
+  getFlightOffersMeta(state) {
+    return state.flightOffers.meta
+  },
+  getFlightOffersDictionaries(state) {
+    return state.flightOffers.dictionaries
+  }
 };
 
 export const mutations = {
@@ -20,6 +32,12 @@ export const mutations = {
   },
   setUserCurrency(state, payload) {
     state.user_currency = Object.keys(payload)[0]
+  },
+  setOffersSearchResponse(state, payload) {
+    state.flightOffers = payload
+  },
+  updateBookingInfo(state, payload) {
+    state.bookingInfo = { ...payload }
   }
 };
 
@@ -55,14 +73,18 @@ export const actions = {
 
   },
   async searchFlightOffers(ctx, payload) {
-    return await this.$axios.get(`/v2/shopping/flight-offers`, {
+    const res = await this.$axios.get(`/v2/shopping/flight-offers`, {
       params: { ...payload }
     })
+    ctx.commit('setOffersSearchResponse', res.data)
+    return res
   },
-
   async findAirports(ctx, payload) {
 
     return await this.$axios.get(`/v1/reference-data/locations/cities?keyword=${payload}&max=10&include=AIRPORTS`)
 
+  },
+  async saveBookinginformation(ctx, payload) {
+    await ctx.commit('updateBookingInfo', payload)
   }
 };
