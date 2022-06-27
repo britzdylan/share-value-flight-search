@@ -63,6 +63,9 @@ export default {
       returnFlight: true,
     };
   },
+  async mounted() {
+    await this.$store.dispatch("resetState");
+  },
   computed: {
     flightOffers() {
       return this.$store.getters.getFlightOffers;

@@ -1,12 +1,15 @@
 const qs = require('qs')
+const getDefaultState = () => {
+  return {
+    user_country: null,
+    user_currency: null,
+    flightOffers: {
+    },
+    bookingInfo: {}
+  }
+}
 
-export const state = () => ({
-  user_country: null,
-  user_currency: null,
-  flightOffers: {
-  },
-  bookingInfo: {}
-});
+export const state = getDefaultState()
 
 export const getters = {
   getUserCurrencyCode(state) {
@@ -46,6 +49,11 @@ export const mutations = {
   updateBookingInfo(state, payload) {
     state.bookingInfo = { ...payload, ...state.bookingInfo }
     payload.id ? window.localStorage.setItem(payload.id, JSON.stringify(state.bookingInfo)) : null
+  },
+  resetStates(state) {
+    // Merge rather than replace so we don't lose observers
+    // https://github.com/vuejs/vuex/issues/1118
+    Object.assign(state, getDefaultState())
   }
 };
 
@@ -101,5 +109,8 @@ export const actions = {
   async getBooking(ctx, id) {
     const payload = JSON.parse(window.localStorage.getItem(id))
     await ctx.commit('updateBookingInfo', payload)
+  },
+  resetState(ctx) {
+    ctx.commit('resetStates')
   }
 };

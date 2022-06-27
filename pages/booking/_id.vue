@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main v-if="flightDetails" class="container">
     <h1 class="leading-4">
       Thank you for your booking
       <svg

@@ -122,7 +122,7 @@
     </ValidationObserver>
     <div class="flex flex-row items-center justify-end py-2">
       <template v-for="(item, key) in flightSettings">
-        <div :key="'badge_' + item" class="badge badge-accent badge-md ml-2">
+        <div :key="'badge_' + key" class="badge badge-accent badge-md ml-2">
           {{ key.toUpperCase() + " : " + item }}
         </div>
       </template>

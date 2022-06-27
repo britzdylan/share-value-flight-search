@@ -3,10 +3,10 @@
     class="card card-compact w-full bg-base-100 shadow-md p-0 flex flex-row items-center justify-between"
   >
     <div class="w-full p-4">
-      <template v-for="itin in item.itineraries">
+      <template v-for="(itin, indexA) in item.itineraries">
         <div
           class="px-4 mb-4 border-l-4 border-accent rounded-sm"
-          :key="itin.id + '_itinerary'"
+          :key="indexA + '_itinerary'"
         >
           <template v-for="(segment, index) in itin.segments">
             <!-- single trip -->
