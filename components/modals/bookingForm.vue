@@ -1,8 +1,24 @@
 <template>
   <div>
-    <input type="checkbox" id="my-modal" class="modal-toggle" />
-    <div class="modal modal-open">
+    <input type="checkbox" id="booking-form" class="modal-toggle" />
+    <div class="modal">
       <div class="modal-box max-w-none w-max min-w-[600px]">
+        <label for="booking-form" class="btn btn-ghost btn-circle">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </label>
         <ul class="steps w-full">
           <template v-for="item in adults">
             <li
@@ -32,7 +48,7 @@
             </li>
           </template>
           <li
-            :class="adults + children + 1 <= step ? 'step-primary' : null"
+            :class="this.totalForms + 1 <= step ? 'step-primary' : null"
             class="step"
           >
             Payment
@@ -102,6 +118,7 @@
                 name="Email"
                 rules="required"
                 class="w-full"
+                v-if="item <= 1"
               >
                 <div class="form-control w-full relative">
                   <label class="label">
@@ -120,13 +137,18 @@
                   </label>
                 </div>
               </ValidationProvider>
-              <div
-                class="modal-action flex flex-row items-center justify-between"
-              >
-                <button @click="goBack" for="my-modal" class="btn btn-ghost">
-                  Back!
+              <div class="modal-action flex flex-row items-center w-full">
+                <button
+                  v-show="step > 1"
+                  @click="goBack"
+                  for="my-modal"
+                  class="btn btn-ghost"
+                >
+                  Back
                 </button>
-                <button for="my-modal" class="btn btn-primary">Next!</button>
+                <button for="my-modal" class="btn btn-primary ml-auto block">
+                  Next!
+                </button>
               </div>
             </form>
           </ValidationObserver>
@@ -149,6 +171,7 @@
 <script>
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import BookingSettings from "~/components/modals/bookingSettings";
+import { v4 as uuidv4 } from "uuid";
 export default {
   name: "BookingForm",
   components: {
@@ -188,16 +211,19 @@ export default {
   },
   methods: {
     nextStep() {
-      this.step++;
       let data = {
         first_name: this.first_name,
         last_name: this.last_name,
         email: this.email,
       };
+      if (this.step > 1) {
+        delete data.email;
+      }
       this.passengerDetails.push(data);
       this.first_name = "";
       this.last_name = "";
       this.email = "";
+      this.step++;
     },
     goBack(e) {
       e.preventDefault();
@@ -209,12 +235,15 @@ export default {
     },
     submitBooking() {
       this.loading = true;
+      let id = uuidv4();
       const timeOut = setTimeout(() => {
         try {
           this.$store.dispatch("saveBookinginformation", {
             passengerDetails: this.passengerDetails,
+            id: id,
           });
           this.loading = false;
+          this.$router.replace(`/booking/${id}`);
         } catch (error) {
           console.log(error);
           this.loading = false;

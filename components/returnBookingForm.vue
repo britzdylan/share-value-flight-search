@@ -95,6 +95,7 @@
             v-slot="{ classes }"
             name="Return Date"
             rules="required"
+            v-if="returnFlight"
           >
             <div class="form-control w-min">
               <label class="label">
@@ -143,6 +144,11 @@ export default {
     ValidationObserver: ValidationObserver,
     ValidationProvider: ValidationProvider,
     BookingSettings: BookingSettings,
+  },
+  props: {
+    returnFlight: {
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -212,6 +218,9 @@ export default {
         currencyCode: this.currencyCode,
         max: 10,
       };
+      if (!this.returnFlight) {
+        delete payload.returnDate;
+      }
       try {
         await this.$store.dispatch("searchFlightOffers", payload);
         this.loading = false;

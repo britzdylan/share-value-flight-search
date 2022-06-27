@@ -23,7 +23,7 @@
         >Seats & Passengers</label
       >
     </div>
-    <ReturnBookingForm />
+    <ReturnBookingForm :returnFlight="returnFlight" />
     <div class="grid grid-cols-1 gap-10">
       <template v-for="(item, index) in flightOffers">
         <FlightCard
@@ -32,6 +32,24 @@
           :key="index + '_flightOffer'"
         />
       </template>
+      <img
+        v-show="!flightOffers"
+        src="plane.svg"
+        class="w-full mt-12 opacity-40 mx-auto"
+      />
+
+      <h1
+        v-show="flightOffers && flightOffers.length == 0"
+        class="text-center mt-12"
+      >
+        Sorry We couldn't find any flights
+      </h1>
+
+      <img
+        v-show="flightOffers && flightOffers.length == 0"
+        src="empty.svg"
+        class="w-1/2 opacity-40 mx-auto"
+      />
     </div>
   </div>
 </template>

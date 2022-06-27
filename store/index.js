@@ -19,7 +19,13 @@ export const getters = {
     return state.flightOffers.meta
   },
   getFlightOffersDictionaries(state) {
-    return state.flightOffers.dictionaries
+    return state.flightOffers.dictionaries ? state.flightOffers.dictionaries : JSON.parse(window.localStorage.getItem('dictionaries'))
+  },
+  getPassenegerDetails(state) {
+    return state.bookingInfo.passengerDetails
+  },
+  getFlightBookingDetails(state) {
+    return state.bookingInfo.flight
   }
 };
 
@@ -34,10 +40,12 @@ export const mutations = {
     state.user_currency = Object.keys(payload)[0]
   },
   setOffersSearchResponse(state, payload) {
+    window.localStorage.setItem('dictionaries', JSON.stringify(payload.dictionaries))
     state.flightOffers = payload
   },
   updateBookingInfo(state, payload) {
-    state.bookingInfo = { ...payload }
+    state.bookingInfo = { ...payload, ...state.bookingInfo }
+    payload.id ? window.localStorage.setItem(payload.id, JSON.stringify(state.bookingInfo)) : null
   }
 };
 
@@ -85,6 +93,13 @@ export const actions = {
 
   },
   async saveBookinginformation(ctx, payload) {
+    await ctx.commit('updateBookingInfo', payload)
+  },
+  async saveFlightInfo(ctx, payload) {
+    await ctx.commit('updateBookingInfo', payload)
+  },
+  async getBooking(ctx, id) {
+    const payload = JSON.parse(window.localStorage.getItem(id))
     await ctx.commit('updateBookingInfo', payload)
   }
 };

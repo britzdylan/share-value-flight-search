@@ -94,6 +94,7 @@
     <!-- price -->
     <div class="w-1/3 p-4 border-l">
       <svg
+        v-show="!isBooking"
         xmlns="http://www.w3.org/2000/svg"
         class="h-5 w-5 opacity-70"
         viewBox="0 0 20 20"
@@ -106,10 +107,19 @@
           clip-rule="evenodd"
         />
       </svg>
+      <h4 v-show="isBooking" class="m-0 text-primary">Total Price:</h4>
       <h4 class="m-0 text-primary">
         {{ item.price.grandTotal }} {{ item.price.currency }}
       </h4>
-      <button class="btn btn-accent w-full btn-sm">Make a Booking</button>
+      <label
+        v-show="!isBooking"
+        :class="loading ? 'loading' : null"
+        @click="saveFlight"
+        for="booking-form"
+        class="btn btn-accent w-full btn-sm"
+      >
+        Make a Booking
+      </label>
     </div>
   </div>
 </template>
@@ -117,6 +127,10 @@
 export default {
   name: "FlightCard",
   props: {
+    isBooking: {
+      type: Boolean,
+      default: false,
+    },
     item: {
       type: Object,
       required: true,
@@ -125,6 +139,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      loading: false,
+    };
   },
   methods: {
     prettyTime(raw) {
@@ -137,6 +156,18 @@ export default {
     },
     prettyDate(raw) {
       return this.$dayjs(raw).format("ddd D MMM");
+    },
+    async saveFlight() {
+      this.loading = true;
+      const timeOut = setTimeout(async () => {
+        try {
+          await this.$store.dispatch("saveFlightInfo", { flight: this.item });
+          this.loading = false;
+        } catch (error) {
+          console.log(error);
+          this.loading = false;
+        }
+      }, 2000);
     },
   },
 };
