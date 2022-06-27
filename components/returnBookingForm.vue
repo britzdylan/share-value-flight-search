@@ -6,7 +6,7 @@
         class="w-full"
         @submit.prevent="handleSubmit(searchFlights)"
       >
-        <div class="flex flex-row w-full items-end justify-between">
+        <div class="md:flex flex-row w-full items-end justify-between">
           <!-- from destination -->
           <ValidationProvider
             v-slot="{ classes }"
@@ -26,7 +26,7 @@
                 name="originLocationCode"
                 type="text"
                 placeholder="City Name"
-                class="input focus:outline-none input-bordered input-primary w-full rounded-tr-none rounded-br-none"
+                class="input focus:outline-none input-bordered input-primary w-full md:rounded-r-none"
               />
 
               <SearchResultsDropdown
@@ -58,7 +58,7 @@
                 name="destinationLocationCode"
                 type="text"
                 placeholder="City Name"
-                class="input focus:outline-none input-bordered input-primary w-full rounded-none"
+                class="input focus:outline-none input-bordered input-primary w-full md:rounded-none"
               />
 
               <SearchResultsDropdown
@@ -77,7 +77,7 @@
             name="Departure Date"
             rules="required"
           >
-            <div class="form-control w-min">
+            <div class="form-control md:w-min">
               <label class="label">
                 <span class="label-text">Departure</span>
               </label>
@@ -86,7 +86,7 @@
                 v-model="departureDate"
                 type="date"
                 placeholder="Departure"
-                class="input focus:outline-none input-bordered input-primary max-w-xs rounded-none"
+                class="input focus:outline-none input-bordered input-primary md:max-w-xs md:rounded-none"
               />
             </div>
           </ValidationProvider>
@@ -97,7 +97,7 @@
             rules="required"
             v-if="returnFlight"
           >
-            <div class="form-control w-min">
+            <div class="form-control md:w-min">
               <label class="label">
                 <span class="label-text">Return</span>
               </label>
@@ -106,23 +106,23 @@
                 v-model="returnDate"
                 type="date"
                 placeholder="Return"
-                class="input focus:outline-none input-bordered input-primary max-w-xs rounded-none"
+                class="input focus:outline-none input-bordered input-primary md:max-w-xs md:rounded-none"
               />
             </div>
           </ValidationProvider>
           <!-- submit -->
           <button
             :class="loading ? 'loading' : null"
-            class="btn btn-primary rounded-l-none"
+            class="btn btn-primary md:rounded-l-none w-full md:w-auto mt-6 md:mt-0"
           >
             {{ !loading ? "Search Flights" : "searching..." }}
           </button>
         </div>
       </form>
     </ValidationObserver>
-    <div class="flex flex-row items-center justify-end py-2">
+    <div class="flex flex-row flex-wrap items-center md:justify-end py-2">
       <template v-for="(item, key) in flightSettings">
-        <div :key="'badge_' + key" class="badge badge-accent badge-md ml-2">
+        <div :key="'badge_' + key" class="badge badge-accent badge-md ml-2 mt-2 md:mt-0">
           {{ key.toUpperCase() + " : " + item }}
         </div>
       </template>

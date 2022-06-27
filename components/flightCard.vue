@@ -1,34 +1,34 @@
 <template>
   <div
-    class="card card-compact w-full bg-base-100 shadow-md p-0 flex flex-row items-center justify-between"
+    class="card card-compact w-full bg-base-100 shadow-md p-0 flex flex-col md:flex-row items-center justify-between"
   >
     <div class="w-full p-4">
       <template v-for="(itin, indexA) in item.itineraries">
         <div
-          class="px-4 mb-4 border-l-4 border-accent rounded-sm"
+          class="px-4 mb-4 border-t-4 md:border-l-4 border-accent rounded-sm"
           :key="indexA + '_itinerary'"
         >
           <template v-for="(segment, index) in itin.segments">
             <!-- single trip -->
             <div
               :key="index + '_segment'"
-              class="w-full flex flex-row items-center"
+              class="w-full flex flex-col md:flex-row items-center"
             >
               <img
-                class="w-8 p-0 mr-3"
+                class="w-8 p-0 mt-3 md:mr-3"
                 :src="`https://content.r9cdn.net/rimg/provider-logos/airlines/v/${segment.carrierCode}.png`"
               />
               <div class="w-full">
                 <div
                   :key="index + '_segment'"
-                  class="grid grid-cols-2 w-full justify-between"
+                  class="grid grid-rows-2 md:grid-cols-2 w-full md:justify-between justify-items-stretch"
                 >
-                  <p
-                    class="m-0 leading-4 font-bold text-md flex flex-row items-center"
+                  <div
+                    class="m-0 leading-4 font-bold text-md md:flex flex-col md:flex-row items-center text-center w-full block"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 inline mr-1 text-warning"
+                      class="h-4 w-4 inline md:mr-1 mb-1 text-warning"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -43,10 +43,10 @@
                       " at " +
                       prettyTime(segment.departure.at)
                     }}
-
+                    <br class="md:hidden" />
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 inline ml-4 mr-1 text-success rotate-180"
+                      class="h-4 w-4 inline md:ml-4 md:mr-1 mb-1 text-success rotate-180"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -61,13 +61,16 @@
                       " at " +
                       prettyTime(segment.arrival.at)
                     }}
-                  </p>
+                  </div>
 
-                  <p class="m-0 leading-4 font-bold text-md justify-self-end">
+                  <p
+                    class="m-0 leading-4 font-bold text-md justify-self-center md:justify-self-end"
+                  >
                     {{ segment.duration.replace("PT", "") }}
                   </p>
                 </div>
-                <small class="opacity-70 m-0"
+                <small
+                  class="opacity-70 m-0 text-center md:text-left mt-2 block"
                   >{{ segment.departure.iataCode }}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -92,21 +95,9 @@
       </template>
     </div>
     <!-- price -->
-    <div class="w-1/3 p-4 border-l">
-      <svg
-        v-show="!isBooking"
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5 opacity-70"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-      >
-        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-        <path
-          fill-rule="evenodd"
-          d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-          clip-rule="evenodd"
-        />
-      </svg>
+    <div
+      class="md:w-1/3 w-full p-4 border-t md:border-l text-center md:text-left"
+    >
       <h4 v-show="isBooking" class="m-0 text-primary">Total Price:</h4>
       <h4 class="m-0 text-primary">
         {{ item.price.grandTotal }} {{ item.price.currency }}

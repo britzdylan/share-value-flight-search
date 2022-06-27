@@ -2,7 +2,7 @@
   <div>
     <input type="checkbox" id="booking-form" class="modal-toggle" />
     <div class="modal">
-      <div class="modal-box max-w-none w-max min-w-[600px]">
+      <div class="modal-box max-w-none w-full md:w-max md:min-w-[600px]">
         <label for="booking-form" class="btn btn-ghost btn-circle">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@
             />
           </svg>
         </label>
-        <ul class="steps w-full">
+        <ul class="steps w-full hidden md:block">
           <template v-for="item in adults">
             <li
               :class="item <= step ? 'step-primary' : null"

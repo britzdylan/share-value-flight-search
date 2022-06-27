@@ -1,6 +1,6 @@
 <template>
-  <main v-if="flightDetails" class="container">
-    <h1 class="leading-4">
+  <main v-if="flightDetails" class="container px-4">
+    <h1 class="md:leading-4">
       Thank you for your booking
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,7 @@
       :isBooking="true"
     />
     <h3>Passenger Details</h3>
-    <div class="grid grid-cols-4 gap-12">
+    <div class="grid md:grid-cols-4 gap-12">
       <template v-for="(item, index) in passenegerDetails">
         <div
           :key="'passenger_info_' + index"

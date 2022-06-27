@@ -1,10 +1,10 @@
 <template>
-  <div class="max-w-6xl mx-auto flex flex-col">
+  <div class="max-w-6xl mx-auto flex flex-col px-4">
     <h1>
       <span class="text-primary">Hello there,</span> <br />
       Book cheap flights with your one-stop travel shop!
     </h1>
-    <div class="flex flex-row items-center justify-between">
+    <div class="md:flex flex-row items-center justify-between">
       <div class="tabs">
         <a
           @click="toggleFlightType(true)"
@@ -19,7 +19,9 @@
           >One Way</a
         >
       </div>
-      <label for="my-modal" class="btn btn-sm btn-accent modal-button"
+      <label
+        for="my-modal"
+        class="btn btn-sm btn-accent modal-button w-full mt-6 md:mt-0 md:w-auto"
         >Seats & Passengers</label
       >
     </div>
