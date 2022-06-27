@@ -5,7 +5,7 @@
     <div class="w-full p-4">
       <template v-for="(itin, indexA) in item.itineraries">
         <div
-          class="px-4 mb-4 border-t-4 md:border-l-4 border-accent rounded-sm"
+          class="px-4 mb-4 border-t-4 md:border-t-0 md:border-l-4 border-accent rounded-sm"
           :key="indexA + '_itinerary'"
         >
           <template v-for="(segment, index) in itin.segments">
@@ -21,10 +21,10 @@
               <div class="w-full">
                 <div
                   :key="index + '_segment'"
-                  class="grid grid-rows-2 md:grid-cols-2 w-full md:justify-between justify-items-stretch"
+                  class="grid grid-rows-2 md:grid-rows-none md:grid-cols-2 w-full md:justify-between justify-items-stretch"
                 >
                   <div
-                    class="m-0 leading-4 font-bold text-md md:flex flex-col md:flex-row items-center text-center w-full block"
+                    class="m-0 leading-4 font-bold text-md md:flex flex-col md:flex-row items-center text-center md:text-left w-full block"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@
                   </p>
                 </div>
                 <small
-                  class="opacity-70 m-0 text-center md:text-left mt-2 block"
+                  class="opacity-70 m-0 text-center md:text-left mt-2 md:mt-0 block"
                   >{{ segment.departure.iataCode }}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +96,7 @@
     </div>
     <!-- price -->
     <div
-      class="md:w-1/3 w-full p-4 border-t md:border-l text-center md:text-left"
+      class="md:w-1/3 w-full p-4 border-t md:border-t-0 md:border-l text-center md:text-left"
     >
       <h4 v-show="isBooking" class="m-0 text-primary">Total Price:</h4>
       <h4 class="m-0 text-primary">

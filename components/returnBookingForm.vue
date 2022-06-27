@@ -231,17 +231,17 @@ export default {
 
     async setLocationInfo(e) {
       console.log(e);
-      this[e[0]] = e[1].iataCode;
+      this[e[0]] = e[2].iataCode;
       this.searchResults = [];
       this.airPorts = {};
       document.activeElement.blur();
       switch (this.ctx) {
         case "originLocationCode":
-          this.from = `${e[1].iataCode} - ${e[2].name}, ${e[1].name}, ${e[2].address.countryCode}`;
+          this.from = `${e[2].iataCode} - ${e[2].name}, ${e[1].name}, ${e[2].address.countryCode}`;
           break;
 
         case "destinationLocationCode":
-          this.to = `${e[1].iataCode} - ${e[2].name}, ${e[1].name}, ${e[2].address.countryCode}`;
+          this.to = `${e[2].iataCode} - ${e[2].name}, ${e[1].name}, ${e[2].address.countryCode}`;
 
           break;
       }

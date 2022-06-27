@@ -19,7 +19,7 @@
             />
           </svg>
         </label>
-        <ul class="steps w-full hidden md:block">
+        <ul class="md:steps w-full hidden">
           <template v-for="item in adults">
             <li
               :class="item <= step ? 'step-primary' : null"
